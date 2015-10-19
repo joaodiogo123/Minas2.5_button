@@ -15,14 +15,14 @@ public class MainActivity extends AppCompatActivity {
     protected EditText w;
     protected int[] id_botoes;
     protected Button[] bArray;
-    protected int numDeMinas = 10;
+    protected int numDeMinas = 10; //Variável que contém i número de minas que vão ser colocadas no jogo.
     protected int[] posicoesMinas;
     protected Button recomecar;
 
     public void carregarBotao(View viewRecebida){
 
         int a = viewRecebida.getId(); //a será igual ao ID da view recebida, o botão carregado.
-        int i = 0;
+        int i;
         //Precorrer o vetor de IDs de botões à procura do ID do botão que foi carregado, desta forma, sabendo qual o índice do botão carregado, e visto que
         //quer o vetor id_botoes, o vetor bArray e o vetor posicoesMinas têm o mesmo tamanho, é possivel verificar se o botão tem uma mina ou não.
         //Por exemplo, se for encontrado o ID do botão na posição 5 do vetor de IDs de seguida é verificada a posição 5 do vetor de minas,
@@ -56,29 +56,14 @@ public class MainActivity extends AppCompatActivity {
         int auxTam = aux.length; //auxTam é igual ao comprimento do vetor aux (56)
         Random rand = new Random(); //Criação do objeto rand do tipo Random
 
-        if (numDeMinas < 56 && numDeMinas > 0) { //Caso o número de minas introduzido pelo utilizador esteja entre 1 e 55
-            //Retirar um número à sorte do vetor auxiliar que servirá para indicar a posição (índice) do vetor de posições das minas em que haverá uma mina
-            for (int i = 0; i < numDeMinas; i++) {
-
-                //int aleatorio = (int)((56 - 0 + 1) * rand() + 0);
-                int aleatorio = rand.nextInt(auxTam - 1); //Número aleatório entre o valor do tamanho do vetor aux menos 1 (55), para que não estejamos a ler uma posição fora do vetor
-                posicoesMinas[aux[aleatorio]] = 1; //É posto um 1 na posição com o valor que foi retirado do vetor auxiliar do vetor posicoesMinas
-                aux[aleatorio] = aux[auxTam - 1]; //Para que o mesmo valor não saia duas vezes é colocado o valor da última posição do vetor aux na posição da qual foi retirado o valor atual
-                auxTam--; //Depois de fazer a troca em cima é decrementado um valor à variável auxTam para que o mesmo valor não tenha o dobro da probabilidade de sair.
-                //Ou seja, visto que o último valor foi colocado na posição atual, de forma a remover a última posição do calculo do número aleatório é decrementado um valor à variável para que o póximo número aleatório apenas esteja entre 0 e o penultimo valor
-            }
-        }else{ //Se o numero de minas introduzido pelo utilizador for maior do que 55 o campo é preenchido com 10 minas
-            numDeMinas = 10;
-            w.setText(Integer.toString(numDeMinas));
-            for (int i = 0; i < numDeMinas; i++) {
-
-                //int aleatorio = (int)((56 - 0 + 1) * rand() + 0);
-                int aleatorio = rand.nextInt(auxTam - 1); //Número aleatório entre o valor do tamanho do vetor aux menos 1 (55), para que não estejamos a ler uma posição fora do vetor
-                posicoesMinas[aux[aleatorio]] = 1; //É posto um 1 na posição com o valor que foi retirado do vetor auxiliar do vetor posicoesMinas
-                aux[aleatorio] = aux[auxTam - 1]; //Para que o mesmo valor não saia duas vezes é colocado o valor da última posição do vetor aux na posição da qual foi retirado o valor atual
-                auxTam--; //Depois de fazer a troca em cima é decrementado um valor à variável auxTam para que o mesmo valor não tenha o dobro da probabilidade de sair.
-                //Ou seja, visto que o último valor foi colocado na posição atual, de forma a remover a última posição do calculo do número aleatório é decrementado um valor à variável para que o póximo número aleatório apenas esteja entre 0 e o penultimo valor
-            }
+        //Retirar um número à sorte do vetor auxiliar que servirá para indicar a posição (índice) do vetor de posições das minas em que haverá uma mina
+        for (int i = 0; i < numDeMinas; i++) {
+            //int aleatorio = (int)((56 - 0 + 1) * rand() + 0);
+            int aleatorio = rand.nextInt(auxTam - 1); //Número aleatório entre o valor do tamanho do vetor aux menos 1 (55), para que não estejamos a ler uma posição fora do vetor
+            posicoesMinas[aux[aleatorio]] = 1; //É posto um 1 na posição com o valor que foi retirado do vetor auxiliar do vetor posicoesMinas
+            aux[aleatorio] = aux[auxTam - 1]; //Para que o mesmo valor não saia duas vezes é colocado o valor da última posição do vetor aux na posição da qual foi retirado o valor atual
+            auxTam--; //Depois de fazer a troca em cima é decrementado um valor à variável auxTam para que o mesmo valor não tenha o dobro da probabilidade de sair.
+            //Ou seja, visto que o último valor foi colocado na posição atual, de forma a remover a última posição do calculo do número aleatório é decrementado um valor à variável para que o póximo número aleatório apenas esteja entre 0 e o penultimo valor
         }
     }
 
@@ -116,12 +101,13 @@ public class MainActivity extends AppCompatActivity {
 
         colocarMinas(); //Colocar as minas nas suas posiçoes pela primeira vez. Inicialmente o número de minas (numDeMinas) é igual a 10
 
+        //RECOMEÇAR//
         recomecar = (Button)findViewById(R.id.botaoRecomecar); //O botão recomeçar irá limpar o texto de todos os botões e criar o número de minas que o
                                                                //utilizador tenha introduzido no EditText
         recomecar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for(int i = 0; i < bArray.length; i++){ //Limpar o texto de todos os botões. Pois o esta função também serve o propósito de recomeçar o jogo
+                for(int i = 0; i < bArray.length; i++){ //Limpar o texto de todos os botões.
 
                     bArray[i].setText("");
                 }
@@ -131,6 +117,11 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 numDeMinas = Integer.parseInt(w.getText().toString()); //Variável que indica qual o número de minas a colocar no campo
+
+                if(numDeMinas > bArray.length - 1 || numDeMinas <= 0){ //Caso o utilizador não introduza um número que esteja entre 1 e 55, ou seja, menor ou igual a 0 ou maior ou igual ao número de botões.
+                    numDeMinas = 10; //O número de minas é posto a 10
+                    w.setText(Integer.toString(numDeMinas));
+                }
 
                 colocarMinas(); //Colocar de novo as minas
             }
