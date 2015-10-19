@@ -126,5 +126,6 @@ public class MainActivity extends AppCompatActivity {
                 colocarMinas(); //Colocar de novo as minas
             }
         });
+
     }
 }
