@@ -2,10 +2,12 @@ package com.joaopires.minas25;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Random;
 
@@ -16,8 +18,154 @@ public class MainActivity extends AppCompatActivity {
     protected int[] id_botoes;
     protected Button[] bArray;
     protected int numDeMinas = 10; //Variável que contém i número de minas que vão ser colocadas no jogo.
-    protected int[] posicoesMinas;
+    protected CampoMinas[] posicoesMinas;
     protected Button recomecar;
+
+    public int contarMinas(int posicao){
+        int largura = 7;
+        int linha = posicoesMinas[posicao].linha;
+        int coluna = posicoesMinas[posicao].coluna;
+        int coluna_ = coluna + 1;
+        if(coluna_ > 6){
+            coluna_ = 6;
+        }
+
+        int _coluna = coluna - 1;
+        if(_coluna < 0){
+            _coluna = 0;
+        }
+
+        int contaMinas = 0;
+        int atual = posicao;
+        Log.w("contar", Integer.toString(atual));
+
+        atual--; //atual-1
+        Log.w("contar", Integer.toString(atual));
+        if(atual >= 0){
+            if(posicoesMinas[atual].mina == 1){
+                contaMinas++;
+                Log.w("contar", "Minas: " + Integer.toString(contaMinas));
+
+                if(posicoesMinas[atual].coluna > coluna_ || posicoesMinas[atual].coluna < _coluna){
+                    contaMinas--;
+                    Log.w("contar", "Linha: " + posicoesMinas[atual].linha + "\nColuna: " + posicoesMinas[atual].coluna);
+                }
+            }
+
+        }
+
+        atual = posicao;
+        atual++; //atual+1
+        Log.w("contar", Integer.toString(atual));
+        if(atual < 56){
+            if(posicoesMinas[atual].mina == 1){
+                contaMinas++;
+                Log.w("contar", "Minas: " + Integer.toString(contaMinas));
+
+                if(posicoesMinas[atual].coluna > coluna_ || posicoesMinas[atual].coluna < _coluna){
+                    contaMinas--;
+                    Log.w("contar", "Linha: " + posicoesMinas[atual].linha + "\nColuna: " + posicoesMinas[atual].coluna);
+                }
+            }
+
+        }
+
+        atual = posicao;
+        atual = atual - largura; //atual-largura
+        Log.w("contar", Integer.toString(atual));
+        if(atual >= 0){
+            if(posicoesMinas[atual].mina == 1){
+                contaMinas++;
+                Log.w("contar", "Minas: " + Integer.toString(contaMinas));
+
+                if(posicoesMinas[atual].coluna > coluna_ || posicoesMinas[atual].coluna < _coluna){
+                    contaMinas--;
+                    Log.w("contar", "Linha: " + posicoesMinas[atual].linha + "\nColuna: " + posicoesMinas[atual].coluna);
+                }
+            }
+
+        }
+
+        atual--; //atual-largura-1
+        Log.w("contar", Integer.toString(atual));
+        if(atual >= 0){
+            if(posicoesMinas[atual].mina == 1){
+                contaMinas++;
+                Log.w("contar", "Minas: " + Integer.toString(contaMinas));
+
+                if(posicoesMinas[atual].coluna > coluna_ || posicoesMinas[atual].coluna < _coluna){
+                    contaMinas--;
+                    Log.w("contar", "Linha: " + posicoesMinas[atual].linha + "\nColuna: " + posicoesMinas[atual].coluna);
+                }
+            }
+
+        }
+
+        atual = posicao;
+        atual = atual - largura;
+        atual++; //atual-largura+1
+        Log.w("contar", Integer.toString(atual));
+        if(atual >= 0){
+            if(posicoesMinas[atual].mina == 1){
+                contaMinas++;
+                Log.w("contar", "Minas: " + Integer.toString(contaMinas));
+
+                if(posicoesMinas[atual].coluna > coluna_ || posicoesMinas[atual].coluna < _coluna){
+                    contaMinas--;
+                    Log.w("contar", "Linha: " + posicoesMinas[atual].linha + "\nColuna: " + posicoesMinas[atual].coluna);
+                }
+            }
+
+        }
+
+        atual = posicao;
+        atual = atual + largura; //atual+largura
+        Log.w("contar", Integer.toString(atual));
+        if(atual < 56){
+            if(posicoesMinas[atual].mina == 1){
+                contaMinas++;
+                Log.w("contar", "Minas: " + Integer.toString(contaMinas));
+
+                if(posicoesMinas[atual].coluna > coluna_ || posicoesMinas[atual].coluna < _coluna){
+                    contaMinas--;
+                    Log.w("contar", "Linha: " + posicoesMinas[atual].linha + "\nColuna: " + posicoesMinas[atual].coluna);
+                }
+            }
+        }
+
+        atual--; //atual+largura-1
+        Log.w("contar", Integer.toString(atual));
+        if(atual < 56){
+            if(posicoesMinas[atual].mina == 1){
+                contaMinas++;
+                Log.w("contar", "Minas: " + Integer.toString(contaMinas));
+
+                if(posicoesMinas[atual].coluna > coluna_ || posicoesMinas[atual].coluna < _coluna){
+                    contaMinas--;
+                    Log.w("contar", "Linha: " + posicoesMinas[atual].linha + "\nColuna: " + posicoesMinas[atual].coluna);
+                }
+            }
+
+        }
+
+        atual = posicao;
+        atual = atual + largura;
+        atual++; //atual+largura+1
+        Log.w("contar", Integer.toString(atual));
+        if(atual < 56){
+            if(posicoesMinas[atual].mina == 1){
+                contaMinas++;
+                Log.w("contar", "Minas: " + Integer.toString(contaMinas));
+
+                if(posicoesMinas[atual].coluna > coluna_ || posicoesMinas[atual].coluna < _coluna){
+                    contaMinas--;
+                    Log.w("contar", "Linha: " + posicoesMinas[atual].linha + "  Coluna: " + posicoesMinas[atual].coluna);
+                }
+            }
+        }
+
+        return contaMinas;
+    }
 
     public void carregarBotao(View viewRecebida){
 
@@ -34,10 +182,18 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        if(posicoesMinas[i] == 1){ //Verificar se o botão tem uma mina
-            bArray[i].setText("M"); //Se existir uma mina é colocada a letra M no botão
-        }else
-            bArray[i].setText("0"); //Se não existir uma mina é colocado um 0
+        //bArray[i].setText(Integer.toString(contarMinas(i)));
+
+        if(posicoesMinas[i].mina == 1){ //Verificar se o botão tem uma mina
+            bArray[i].setText(Integer.toString(contarMinas(i)));
+            //bArray[i].setText("M"); //Se existir uma mina é colocada a letra M no botão
+            Toast toast = Toast.makeText(MainActivity.this, "Linha: " + posicoesMinas[i].linha + "\nColuna: " + posicoesMinas[i].coluna, Toast.LENGTH_SHORT);
+            toast.show();
+        }else {
+            bArray[i].setText("N"); //Se não existir uma mina é colocado um 0
+            Toast toast = Toast.makeText(MainActivity.this, "Linha: " + posicoesMinas[i].linha + "\nColuna: " + posicoesMinas[i].coluna, Toast.LENGTH_SHORT);
+            toast.show();
+        }
 
     }
 
@@ -45,12 +201,26 @@ public class MainActivity extends AppCompatActivity {
     public void colocarMinas(){
 
         int[] aux = new int[56]; //Array auxiliar
-        posicoesMinas = new int[56]; //Array que irá indicar se um botão tem uma mina ou não. Por exempo, se o array posicoesMina tem um 1 na posição 4 o
-        //botão da posição 4 do array bArray terá uma mina.
+        int contaLinha = 0;
+        int linhaAtual = 0;
+        int colunaAtual = 0;
+
         for(int i = 0; i < aux.length; i++){ //Preencher o vetor auxiliar com os números de 0 a 55 e iniciar o vertor de posições de minas a zero (sem nunhumas minas).
 
+            if(contaLinha > 6){
+                contaLinha = 0;
+                linhaAtual++;
+            }
+            if(colunaAtual > 6){
+                colunaAtual = 0;
+            }
+
             aux[i] = i;
-            posicoesMinas[i] = 0;
+            posicoesMinas[i].mina = 0;
+            posicoesMinas[i].linha = linhaAtual;
+            posicoesMinas[i].coluna = colunaAtual;
+            contaLinha++;
+            colunaAtual++;
         }
 
         int auxTam = aux.length; //auxTam é igual ao comprimento do vetor aux (56)
@@ -60,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < numDeMinas; i++) {
             //int aleatorio = (int)((56 - 0 + 1) * rand() + 0);
             int aleatorio = rand.nextInt(auxTam - 1); //Número aleatório entre o valor do tamanho do vetor aux menos 1 (55), para que não estejamos a ler uma posição fora do vetor
-            posicoesMinas[aux[aleatorio]] = 1; //É posto um 1 na posição com o valor que foi retirado do vetor auxiliar do vetor posicoesMinas
+            posicoesMinas[aux[aleatorio]].mina = 1; //É posto um 1 na posição com o valor que foi retirado do vetor auxiliar do vetor posicoesMinas
             aux[aleatorio] = aux[auxTam - 1]; //Para que o mesmo valor não saia duas vezes é colocado o valor da última posição do vetor aux na posição da qual foi retirado o valor atual
             auxTam--; //Depois de fazer a troca em cima é decrementado um valor à variável auxTam para que o mesmo valor não tenha o dobro da probabilidade de sair.
             //Ou seja, visto que o último valor foi colocado na posição atual, de forma a remover a última posição do calculo do número aleatório é decrementado um valor à variável para que o póximo número aleatório apenas esteja entre 0 e o penultimo valor
@@ -99,6 +269,12 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
+        posicoesMinas = new CampoMinas[56]; //Array que irá indicar se um botão tem uma mina ou não. Por exempo, se o array posicoesMina tem um 1 na posição 4 o
+                                            //botão da posição 4 do array bArray terá uma mina.
+        for(int i = 0; i < posicoesMinas.length; i++){
+
+            posicoesMinas[i] = new CampoMinas();
+        }
         colocarMinas(); //Colocar as minas nas suas posiçoes pela primeira vez. Inicialmente o número de minas (numDeMinas) é igual a 10
 
         //RECOMEÇAR//
